@@ -39,13 +39,13 @@ extern const unsigned char c_bytepopcount[256];
 
 typedef uint64_t bitunit;
 #define L2BITUNIT_BYTES 3
-#define POPCOUNT(i) (__builtin_popcountll(i))
+#define POPCOUNT(i) (INT64_POPCOUNT(i))
 
 #elif BITARRAY_UNIT==2
 
 typedef uint32_t bitunit;
 #define L2BITUNIT_BYTES 2
-#define POPCOUNT(i) (__builtin_popcount(i))
+#define POPCOUNT(i) (INT32_POPCOUNT(i))
 
 #else
 
