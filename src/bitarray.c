@@ -74,6 +74,7 @@ static inline bitunit overflow_mask(size_t n_overflow) {
 }
 
 size_t count_true(bitarray* ba) {
+    bitunit last = ba->bits[ba->nunits - 1];
     ba->bits[ba->nunits - 1] &= overflow_mask(ba->noverflowbits);
 
     size_t nints = (ba->nunits * BITUNIT_BYTES) / sizeof(uint32_t);
@@ -90,6 +91,8 @@ size_t count_true(bitarray* ba) {
     for (size_t i = 0; i < noverflowbytes; i++) {
         c += CHAR_POPCOUNT(overflow[i]);
     }
+
+    ba->bits[ba->nunits - 1] = last;
 
     return c;
 }
