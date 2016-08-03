@@ -21,7 +21,11 @@ extern const unsigned char c_bytepopcount[256];
 //DEBUG
 #define BITARRAY_UNIT 0
 
+#if CHAR_BIT == 8
 #define L2CHAR_BIT 3
+#else
+#error "CHAR_BIT on this system is not supported."
+#endif
 
 #ifndef BITARRAY_UNIT
 
