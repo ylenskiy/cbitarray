@@ -18,7 +18,7 @@ extern const unsigned char c_bytepopcount[256];
 #define INT64_POPCOUNT(i) (__builtin_popcountll(i))
 #endif
 
-//DEBUG
+// TODO: Understand optimal choice
 #define BITARRAY_UNIT 0
 
 #if CHAR_BIT == 8
@@ -86,10 +86,24 @@ void new_bitarray_bits(bitarray *ba, size_t bits);
 void new_bitarray_bytes(bitarray *ba, size_t bytes);
 void free_bitarray(bitarray *ba);
 
-bool testbit(bitarray *ba, size_t bit);
-void setbit(bitarray *ba, size_t bit);
-void clearbit(bitarray *ba, size_t bit);
-void fill_bitarray(bitarray *ba, bool b);
+static inline bool testbit(bitarray *ba, size_t bit) {
+    return TESTBIT(ba->bits, bit);
+}
+
+static inline void setbit(bitarray *ba, size_t bit) {
+    SETBIT(ba->bits, bit);
+}
+
+static inline void clearbit(bitarray *ba, size_t bit) {
+    CLEARBIT(ba->bits, bit);
+}
+
+static inline void fill_bitarray(bitarray *ba, bool b) {
+    int f = 0;
+    if (b) { f = ~f; }
+    memset((void *)ba->bits, f, ba->nunits * BITUNIT_BYTES);
+}
+
 size_t count_true(bitarray* ba);
 size_t count_true_bits(bitarray *ba, size_t bits);
 

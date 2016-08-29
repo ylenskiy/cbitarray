@@ -50,24 +50,6 @@ void free_bitarray(bitarray *ba) {
     free(ba->bits);
 }
 
-bool testbit(bitarray *ba, size_t bit) {
-    return TESTBIT(ba->bits, bit);
-}
-
-void setbit(bitarray *ba, size_t bit) {
-    SETBIT(ba->bits, bit);
-}
-
-void clearbit(bitarray *ba, size_t bit) {
-    CLEARBIT(ba->bits, bit);
-}
-
-void fill_bitarray(bitarray *ba, bool b) {
-    int f = 0;
-    if (b) { f = ~f; }
-    memset((void *)ba->bits, f, ba->nunits * BITUNIT_BYTES);
-}
-
 static inline bitunit overflow_mask(size_t n_overflow) {
     bitunit mask = (((bitunit)1) << n_overflow) - ((bitunit)1);
     return mask ? mask : ~0;
